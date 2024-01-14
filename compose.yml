@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mysql:
+    container_name: ventas
+    image: mysql:5.7
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_general_ci",
+        "--init-connect='SET NAMES UTF8;'",
+        "--innodb-flush-log-at-trx-commit=0",
+      ]
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=ventas
+      - LANG=C.UTF-8
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
