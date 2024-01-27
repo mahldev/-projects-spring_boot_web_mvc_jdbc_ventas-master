@@ -2,15 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Detalles</title>
+    <title>Comercial detalles</title>
     <link rel="stylesheet" th:href="@{/output.css}" />
   </head>
   <body class="flex flex-col items-center m-auto">
-    <section th:object="${comercial}" class="flex gap-6 mt-6">
+    <section th:object="${comercial}" class="flex flex-col gap-6 mt-6">
       <p th:text="*{nombre}"></p>
       <p th:text="*{apellido1}"></p>
       <p th:text="*{apellido2}"></p>
       <p th:text="*{comision}"></p>
+    </section>
+
+    <section>
+      <h3>Pedidos</h3>
     </section>
   </body>
 </html>
