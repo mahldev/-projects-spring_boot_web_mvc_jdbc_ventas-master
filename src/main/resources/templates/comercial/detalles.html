@@ -1,0 +1,16 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Detalles</title>
+    <link rel="stylesheet" th:href="@{/output.css}" />
+  </head>
+  <body class="flex flex-col items-center m-auto">
+    <section th:object="${comercial}" class="flex gap-6 mt-6">
+      <p th:text="*{nombre}"></p>
+      <p th:text="*{apellido1}"></p>
+      <p th:text="*{apellido2}"></p>
+      <p th:text="*{comision}"></p>
+    </section>
+  </body>
+</html>

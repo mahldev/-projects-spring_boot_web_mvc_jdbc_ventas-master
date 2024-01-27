@@ -1,6 +1,7 @@
 package org.iesbelen.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.iesbelen.dao.ClienteDAO;
 import org.iesbelen.modelo.Cliente;
@@ -10,19 +11,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteService {
 
+    @Autowired
     private ClienteDAO clienteDAO;
 
-    // Se utiliza inyección automática por constructor del framework Spring.
-    // Por tanto, se puede omitir la anotación Autowired
-    @Autowired
-    public ClienteService(ClienteDAO clienteDAO) {
-        this.clienteDAO = clienteDAO;
+    public List<Cliente> listAll() {
+        return clienteDAO.getAll();
     }
 
-    public List<Cliente> listAll() {
+    public void create(final Cliente cliente) {
+        clienteDAO.create(cliente);
+    }
 
-        return clienteDAO.getAll();
+    public Optional<Cliente> find(final int id) {
+        return clienteDAO.find(id);
+    }
 
+    public void update(final Cliente cliente) {
+        clienteDAO.update(cliente);
+    }
+
+    public void delete(final int id) {
+        clienteDAO.delete(id);
     }
 
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <link rel="stylesheet" th:href="@{/output.css}" />
+  </head>
+  <body class="flex flex-col items-center">
+    <form
+      th:object="${comercial}"
+      th:action="@{/comercial/editar/}+${comercial.id}"
+      th:method="put"
+      class="flex flex-col gap-3 mt-10"
+    >
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        <p>Nombre</p>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          th:field="*{nombre}"
+        />
+      </label>
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        <p>Primer Apellido</p>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          th:field="*{apellido1}"
+        />
+      </label>
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        <p>Segundo Apellido</p>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          th:field="*{apellido2}"
+        />
+      </label>
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        <p>Comision</p>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          th:field="*{comision}"
+        />
+      </label>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Guardar
+      </button>
+    </form>
+  </body>
+</html>
