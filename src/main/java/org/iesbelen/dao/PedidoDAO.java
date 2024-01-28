@@ -16,4 +16,6 @@ public interface PedidoDAO {
 
     void update(final Pedido pedido);
 
+    List<Pedido> findAllByIdComercial(final int id);
+
 }

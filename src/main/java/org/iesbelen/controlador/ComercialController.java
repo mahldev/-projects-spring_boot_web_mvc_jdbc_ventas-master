@@ -1,6 +1,9 @@
 package org.iesbelen.controlador;
 
+import org.iesbelen.dto.ComercialDto;
+import org.iesbelen.dto.PedidoDto;
 import org.iesbelen.modelo.Comercial;
+import org.iesbelen.service.ClienteService;
 import org.iesbelen.service.ComercialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +22,10 @@ public class ComercialController {
     @Autowired
     private ComercialService comercialService;
 
-    private RedirectView comericalRedirect = new RedirectView("/comercial");
+    @Autowired
+    private ClienteService clienteService;
+
+    private final RedirectView comericalRedirect = new RedirectView("/comercial");
 
     @GetMapping
     public String getAll(final Model model) {
@@ -32,7 +38,32 @@ public class ComercialController {
     public String getComerial(final Model model, @PathVariable final int id) {
         return comercialService.find(id)
                 .map(comercial -> {
-                    model.addAttribute("comercial", comercial);
+                    final var pedidos = comercialService.findAllPedidos(id).stream()
+                            .map(p -> {
+                                final var cliente = clienteService.find(p.getIdCliente());
+                                return new PedidoDto(
+                                        p.getId(),
+                                        p.getTotal(),
+                                        p.getFecha(),
+                                        p.getIdComercial(),
+                                        p.getIdCliente(),
+                                        cliente.get().getNombre());
+                            }).toList();
+
+                    final var totalPedidos = pedidos.size();
+                    final var mediaTotalPedidos = pedidos.stream()
+                            .mapToDouble(PedidoDto::total).average().orElse(0d);
+                    final var comercialDto = new ComercialDto(
+                            comercial.getId(),
+                            comercial.getNombre(),
+                            comercial.getApellido1(),
+                            comercial.getApellido2(),
+                            comercial.getComision(),
+                            pedidos,
+                            totalPedidos,
+                            Math.round(mediaTotalPedidos));
+
+                    model.addAttribute("comercial", comercialDto);
                     return "comercial/detalles";
                 })
                 .orElse("404Error");

@@ -81,4 +81,10 @@ public class PedidoDAOImpl implements PedidoDAO {
             return null;
         }
     }
+
+    @Override
+    public List<Pedido> findAllByIdComercial(final int id) {
+        return jdbcTemplate.query("SELECT * FROM pedido WHERE id_comercial = ?",
+                (rs, _unsed) -> pedidoMapper(rs), id);
+    }
 }
