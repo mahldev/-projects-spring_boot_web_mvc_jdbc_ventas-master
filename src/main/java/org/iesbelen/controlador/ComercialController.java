@@ -1,7 +1,7 @@
 package org.iesbelen.controlador;
 
-import org.iesbelen.dto.ComercialDto;
 import org.iesbelen.dto.PedidoDto;
+import org.iesbelen.mappers.ComercialMapper;
 import org.iesbelen.modelo.Comercial;
 import org.iesbelen.service.ClienteService;
 import org.iesbelen.service.ComercialService;
@@ -24,6 +24,9 @@ public class ComercialController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private ComercialMapper comercialMapper;
 
     private final RedirectView comericalRedirect = new RedirectView("/comercial");
 
@@ -53,16 +56,12 @@ public class ComercialController {
                     final var totalPedidos = pedidos.size();
                     final var mediaTotalPedidos = pedidos.stream()
                             .mapToDouble(PedidoDto::total).average().orElse(0d);
-                    final var comercialDto = new ComercialDto(
-                            comercial.getId(),
-                            comercial.getNombre(),
-                            comercial.getApellido1(),
-                            comercial.getApellido2(),
-                            comercial.getComision(),
+                    final var comercialDto = comercialMapper.comercialToComerialDto(
+                            comercial,
                             pedidos,
                             totalPedidos,
-                            Math.round(mediaTotalPedidos));
-
+                            mediaTotalPedidos);
+                    ;
                     model.addAttribute("comercial", comercialDto);
                     return "comercial/detalles";
                 })

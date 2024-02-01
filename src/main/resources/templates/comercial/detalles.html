@@ -8,10 +8,10 @@
   <body class="flex flex-col items-center m-auto">
     <h3 class="mt-6">Comercial</h3>
     <section th:object="${comercial}" class="flex gap-6 mt-6">
-      <table>
+      <table class="text-left">
         <thead>
           <tr class="text-left">
-            <th class="px-6 py-3 text-left">Nombre</th>
+            <th class="px-6 py-3">Nombre</th>
             <th class="px-6 py-3">Apellido 1</th>
             <th class="px-6 py-3">Apellido 2</th>
             <th class="px-6 py-3">Comision</th>
@@ -48,7 +48,7 @@
           >
             <td th:text="${pedido.id}" class="px-6 py-4 font-medium"></td>
             <td th:text="${pedido.total}" class="px-6 py-4 font-medium"></td>
-            <td th:text="${pedido.fecha}" class="px-6 py-4 font-medium"></td>
+            <td th:text="${pedido.fecha}" th:class="px-6 py-4 font-medium"></td>
             <td class="px-6 py-4 font-medium">
               <a
                 th:text="${pedido.nombreCliente}"
