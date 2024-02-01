@@ -14,7 +14,7 @@ public interface ComercialMapper {
     @Mapping(source = "listaPedidosIn", target = "listaPedidos")
     @Mapping(source = "totalIn", target = "total")
     @Mapping(source = "mediaTotalPedidosIn", target = "mediaTotalPedidos")
-    ComercialDto comercialToComerialDto(
+    ComercialDto ToDto(
             Comercial comercial,
             List<PedidoDto> listaPedidosIn,
             int totalIn,

@@ -23,24 +23,27 @@ public class ComercialService {
         return comercialDAO.getAll();
     }
 
-    public Optional<Comercial> find(final int id) {
+    public Optional<Comercial> find(int id) {
         return comercialDAO.find(id);
     }
 
-    public void create(final Comercial comercial) {
+    public void create(Comercial comercial) {
         comercialDAO.create(comercial);
     }
 
-    public void update(final Comercial comercial) {
+    public void update(Comercial comercial) {
         comercialDAO.update(comercial);
     }
 
-    public void remove(final int id) {
+    public void remove(int id) {
         comercialDAO.delete(id);
     }
 
-    public List<Pedido> findAllPedidos(final int id) {
+    public List<Pedido> findAllPedidos(int id) {
         return pedidoDAO.findAllByIdComercial(id);
     }
 
+    public List<Comercial> getAllComercial(int idCliente) {
+        return comercialDAO.getAllComercial(idCliente);
+    }
 }

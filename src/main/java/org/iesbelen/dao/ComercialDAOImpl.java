@@ -1,6 +1,7 @@
 package org.iesbelen.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import lombok.val;
 
 @Repository
 public class ComercialDAOImpl implements ComercialDAO {
@@ -52,16 +55,8 @@ public class ComercialDAOImpl implements ComercialDAO {
 
     @Override
     public Optional<Comercial> find(final int id) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject(
-                        "SELECT * FROM comercial WHERE id = ?",
-                        (rs, rowNum) -> new Comercial(
-                                rs.getInt("id"),
-                                rs.getString("nombre"),
-                                rs.getString("apellido1"),
-                                rs.getString("apellido2"),
-                                rs.getFloat("comisión")),
-                        id));
+        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM comercial WHERE id = ?",
+                (rs, rowNum) -> comercialMapperSql(rs), id));
     }
 
     @Override
@@ -80,5 +75,27 @@ public class ComercialDAOImpl implements ComercialDAO {
     @Override
     public void delete(final long id) {
         jdbcTemplate.update("DELETE FROM comercial WHERE id = ?", id);
+    }
+
+    @Override
+    public List<Comercial> getAllComercial(int idCliente) {
+        val query = """
+                SELECT C.*
+                FROM cliente C
+                LEFT JOIN pedido P ON C.id = P.id_cliente
+                LEFT JOIN comercial CM ON P.id_comercial = CM.id
+                WHERE C.id = ?
+                GROUP BY C.id;
+                    """;
+        return jdbcTemplate.query(query, (rs, rowNum) -> comercialMapperSql(rs), idCliente);
+    }
+
+    private static Comercial comercialMapperSql(ResultSet rs) {
+        try {
+            return new Comercial(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"),
+                    rs.getString("apellido2"), rs.getFloat("comisión"));
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

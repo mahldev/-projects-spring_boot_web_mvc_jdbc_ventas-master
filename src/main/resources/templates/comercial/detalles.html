@@ -44,11 +44,11 @@
         <tbody class="text-left">
           <tr
             th:each="pedido : ${comercial.listaPedidos}"
-            class="bg-white border-b"
+            th:class="${max == pedido.total} ? 'bg-green-300': (${min == pedido.total} ? 'bg-yellow-300' : '')"
           >
             <td th:text="${pedido.id}" class="px-6 py-4 font-medium"></td>
             <td th:text="${pedido.total}" class="px-6 py-4 font-medium"></td>
-            <td th:text="${pedido.fecha}" th:class="px-6 py-4 font-medium"></td>
+            <td th:text="${pedido.fecha}" class="px-6 py-4 font-medium"></td>
             <td class="px-6 py-4 font-medium">
               <a
                 th:text="${pedido.nombreCliente}"

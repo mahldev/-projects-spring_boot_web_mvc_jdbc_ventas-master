@@ -17,4 +17,6 @@ public interface ComercialDAO {
 
     public void delete(long id);
 
+    List<Comercial> getAllComercial(int idCliente);
+
 }
